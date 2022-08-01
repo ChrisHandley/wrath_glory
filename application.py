@@ -6,7 +6,8 @@ import dash_html_components as html
 import dash_core_components as dcc
 import base64
 from dash.dependencies import Output, Input
-
+from factionKeywords import keywords_factions
+from test_list import test_list
 
 app = dash.Dash(__name__, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.FLATLY],
                 meta_tags=[{'name': 'viewport',
@@ -114,13 +115,16 @@ maximums_attr = {
 
 }
 
-keywords={
+keywords_species={
     "Human": None,
     "Adeptus Astartes": "[Chapter]",
     "Primaris Astartes": "[Chapter], Imperium, Primaris",
     "Aeldari": None,
     "Ork": "[Clan]",
 }
+
+faction_list=keywords_factions
+
 
 keyword_list_master = [
     {'label': 'UP', 'value': 'UP'},
@@ -236,6 +240,13 @@ app.layout = dbc.Container([
                                 ),
                                 width=3, style={"textAlign": "left"}
                             ),
+                        dbc.Col(html.H5("Faction")),
+                        dbc.Col(
+                            dcc.Dropdown(id="faction_selected",
+                                multi=False, clearable=False, value="Imperium"
+                                ),
+                                width=3, style={"textAlign": "left"}
+                            ),
                         # dbc.Col(html.Div(id="maximums"), width=2),
                     ]),
                 html.Hr(),
@@ -243,7 +254,7 @@ app.layout = dbc.Container([
                     dbc.Col(html.H5("Keywords"), width=2),
                 ]),
                 dbc.Row([
-                    dbc.Col(html.H5(id="keywords_species"), width=2),
+                    dbc.Col(html.H5(id="species_keywords"), width=2),
                     dbc.Col(dcc.Dropdown(options=keyword_list_master, id="keyword_list", multi=True,
                             clearable=True, placeholder="Select Keywords"))
                 ]),
@@ -546,10 +557,20 @@ app.layout = dbc.Container([
 ])
 
 
+@app.callback(
+    Output("faction_selected", "options"),
+    Input("species_selected", "value")
+)
+def faction_select(species_selected):
+    print("species ", species_selected)
+    faction_selected = [{'label': 'Anhrathe', 'value': 'Anhrathe'},
+                        {'label': 'Asuryani', 'value': 'Asuryani'}]
+    return(faction_selected)
+
 
 @app.callback(
     Output("attribute_check", "children"),
-    Output('keywords_species', 'children'),
+    Output('species_keywords', 'children'),
     inputs=dict(attr=[Input("{}".format(_), "value") for _ in Attributes],
     # species_selected=Input("placeholder", "value"),
     speed=[Input('speed', 'value')],
@@ -576,8 +597,8 @@ def attribute_checks(attr, speed, species_selected):
     if speed[0] > max_speed:
         attribute_check=html.H5(children="Attributes Not Legal", style={"color": "red"})
     
-    keywords_species = keywords[species_selected[0]]
-    return(attribute_check, keywords_species)
+    species_keywords = keywords_species[species_selected[0]]
+    return(attribute_check, species_keywords)
     
 
 @app.callback(
