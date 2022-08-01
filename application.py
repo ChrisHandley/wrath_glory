@@ -138,21 +138,44 @@ app.layout = dbc.Container([
     dbc.Row(
         [
             dbc.Col(html.H3("Attributes",
-                            style={"textAlign": "center"}), width=4),
+                            style={"textAlign": "center"}), width=3),
             dbc.Col([
                 # html.Div(id='placeholder'),
                 html.Div(
-                            id="attribute_check"),]
+                            id="attribute_check"),], width=3
             ),
-            dbc.Col(
-                # html.Div(id='placeholder'),
-                    html.H5("Threat Level",
+            dbc.Col([
+                dbc.Row([
+                        dbc.Col(
+                        # html.Div(id='placeholder'),
+                            html.H5("Tier",
+                            style={"textAlign": "left"}), width=3),
+                        dbc.Col(
+                        # html.Div(id='placeholder'),
+                            html.H5("1:",
                             style={"textAlign": "center"}), width=2),
-            dbc.Col([
-                # html.Div(id='placeholder'),
-                html.Div(
-                            id="threat_level"),]
-            ),
+                        dbc.Col(
+                        # html.Div(id='placeholder'),
+                            html.H5("2:",
+                            style={"textAlign": "center"}), width=2),
+                        dbc.Col(
+                        # html.Div(id='placeholder'),
+                            html.H5("3:",
+                            style={"textAlign": "center"}), width=2),
+                        dbc.Col(
+                        # html.Div(id='placeholder'),
+                            html.H5("4:",
+                            style={"textAlign": "center"}), width=2),
+                ]),
+                dbc.Row([
+                    dbc.Col(html.H5("NPC Threat Level", style={"textAlign": "left"}), width=3),
+                    dbc.Col(html.H5(id="threat_level1", style={"textAlign": "center"}), width=2),
+                    dbc.Col(html.H5(id="threat_level2", style={"textAlign": "center"}), width=2),
+                    dbc.Col(html.H5(id="threat_level3", style={"textAlign": "center"}), width=2),
+                    dbc.Col(html.H5(id="threat_level4", style={"textAlign": "center"}), width=2),
+
+                ])    
+            ])
         ]
     ),   
     html.Hr(),
@@ -694,6 +717,10 @@ def computeFellowship(fellowship, cunning, deception, insight, persuasion):
     Output("totalShock", "children"),
     Output("totalConviction", "children"),
     Output("totalResolve", "children"),
+    Output("threat_level1", "children"),
+    Output("threat_level2", "children"),
+    Output("threat_level3", "children"),
+    Output("threat_level4", "children"),
     inputs=dict(attr=[Input("{}".format(_), "value") for _ in Attributes],
     skill=[Input("{}".format(_), "value") for _ in Skills],
     armour=Input("armour", "value")
@@ -736,6 +763,22 @@ def xpcost(attr ,skill, armour):
     else:
         tier_result  = 5
 
+    threat_level1 = 'T'
+    if value > 75: threat_level1 = 'E'
+    if value > 150: threat_level1 = 'A'   
+
+    threat_level2 = 'T'
+    if value > 150: threat_level2 = 'E'
+    if value > 250: threat_level2 = 'A'
+
+    threat_level3 = 'T'
+    if value > 250: threat_level3 = 'E'
+    if value > 350: threat_level3 = 'A'
+
+    threat_level4 = 'T'
+    if value > 300: threat_level4 = 'E'
+    if value > 500: threat_level4 = 'A'
+
     toughness = attr[1]
     initiative = attr[3]
     willpower = attr[4]
@@ -756,7 +799,7 @@ def xpcost(attr ,skill, armour):
 
     
     return(totalCost, tier_result, totalResilience, totalDefence, totalWounds, totalShock,
-            totalConviction, totalResolve)
+            totalConviction, totalResolve, threat_level1, threat_level2, threat_level3, threat_level4)
 
 
 if __name__ == '__main__':
