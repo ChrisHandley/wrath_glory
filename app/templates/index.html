@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wrath App</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h1> Wrath & Glory NPC Calculator</h1>
+        <div class="row">
+            <div class="col">
+                Tier: <span id="tier">{{ tier }}</span>
+                XP Cost: <span id="xpcost">{{ XP_Cost }}</span>
+                <h3>Attributes</h3>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                Strength: <span id="strength">{{ attributes.strength }}</span>
+                <br>
+                <button class="btn btn-primary" name="strength" id="str-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="strength" id="str-down">DOWN</button>
+                <br><br>
+                Agility: <span id="agility">{{ attributes.agility }}</span>
+                <br>
+                <button class="btn btn-primary" name="agility" id="agl-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="agility" id="agl-down">DOWN</button>
+                <br><br>
+                Willpower: <span id="willpower">{{ attributes.willpower }}</span>
+                <br>
+                <button class="btn btn-primary" name="willpower" id="wil-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="willpower" id="wil-down">DOWN</button>
+                <br><br>
+                Fellowship: <span id="fellowship">{{ attributes.fellowship }}</span>
+                <br>
+                <button class="btn btn-primary" name="fellowship" id="fel-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="fellowship" id="fel-down">DOWN</button>
+                <br><br>
+            </div>
+            <div class="col">
+                Toughness: <span id="toughness">{{ attributes.toughness }}</span>
+                <br>
+                <button class="btn btn-primary" name="toughness" id="tgh-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="toughness" id="tgh-down">DOWN</button>
+                <br><br>
+                Initiative: <span id="initiative">{{ attributes.initiative }}</span>
+                <br>
+                <button class="btn btn-primary" name="initiative" id="ini-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="initiative" id="ini-down">DOWN</button>
+                <br><br>
+                Intelligence: <span id="intelligence">{{ attributes.intelligence }}</span>
+                <br>
+                <button class="btn btn-primary" name="intelligence" id="int-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="intelligence" id="int-down">DOWN</button>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="row">
+            
+            <div class="col">
+                <h3>Dervied Stats</h3>   
+                <br>
+                <p>Defence: <span id="defence">{{ derived.defence }}</span></p>
+            
+            
+                <p>Shock: <span id="shock">{{ derived.shock }}</span></p>
+
+                <p>Conviction: <span id="conviction">{{ derived.conviction }}</span></p>
+                <p>Resolve: <span id="resolve">{{ derived.resolve }}</span></p>
+            </div>
+            <div class="col">
+                    <p>Armour: <span id="armour">{{ attributes.armour }}</span></p>
+                    <button class="btn btn-primary" name="armour" id="arm-up">UP</button>
+                    <br>
+                    <button class="btn btn-primary" name="armour" id="arm-down">DOWN</button>
+                    <br><br>
+                    <p>Resilience: <span id="resilience">{{ derived.resilience }}</span></p>
+                    <p>Wounds: <span id="wounds">{{ derived.wounds }}</span></p>
+            </div>
+        </div>
+        <h3>Skills</h3>
+        <div class="row">
+            <div class="col">
+                Athletics: <span id="athletics">{{ attributes.athletics }}</span>
+                Total: <span  id="athleticstot">{{ skills_total.athletics }}</span>
+                <br>
+                <button class="btn btn-primary" name="athletics" id="ath-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="athletics" id="ath-down">DOWN</button>
+                <br><br>
+                Awareness: <span id="awareness">{{ attributes.awareness }}</span>
+                Total: <span  id="awarenesstot">{{ skills_total.awareness }}</span>
+                <br>
+                <button class="btn btn-primary" name="awareness" id="awr-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="awareness" id="awr-down">DOWN</button>
+                <br><br>
+                Ballistic Skill: <span id="ballistic">{{ attributes.ballistic }}</span>
+                Total: <span  id="ballistictot">{{ skills_total.ballistic }}</span>
+                <br>
+                <button class="btn btn-primary" name="ballistic" id="bs-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="ballistic" id="bs-down">DOWN</button>
+                <br><br>
+                Cunning: <span id="cunning">{{ attributes.cunning }}</span>
+                Total: <span  id="cunningtot">{{ skills_total.cunning }}</span>
+                <br>
+                <button class="btn btn-primary" name="cunning" id="cun-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="cunning" id="cun-down">DOWN</button>
+                <br><br>
+                Deception: <span id="deception">{{ attributes.deception }}</span>
+                Total: <span  id="deceptiontot">{{ skills_total.deception }}</span>
+                <br>
+                <button class="btn btn-primary" name="deception" id="dec-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="deception" id="dec-down">DOWN</button>
+                <br><br>
+                Insight: <span id="insight">{{ attributes.insight }}</span>
+                Total: <span  id="insighttot">{{ skills_total.insight }}</span>
+                <br>
+                <button class="btn btn-primary" name="insight" id="ins-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="insight" id="ins-down">DOWN</button>
+                <br><br>
+            </div>
+            <div class="col">
+                Intimidation: <span id="intimidation">{{ attributes.intimidation }}</span>
+                Total: <span  id="intimidationtot">{{ skills_total.intimidation }}</span>
+                <br>
+                <button class="btn btn-primary" name="intimidation" id="inm-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="intimidation" id="inm-down">DOWN</button>
+                <br><br>
+                Investigation: <span id="investigation">{{ attributes.investigation }}</span>
+                Total: <span  id="investigationtot">{{ skills_total.investigation }}</span>
+                <br>
+                <button class="btn btn-primary" name="investigation" id="inv-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="investigation" id="inv-down">DOWN</button>
+                <br><br>
+                Leadership: <span id="leadership">{{ attributes.leadership }}</span>
+                Total: <span  id="leadershiptot">{{ skills_total.leadership }}</span>
+                <br>
+                <button class="btn btn-primary" name="leadership" id="lea-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="leadership" id="lea-down">DOWN</button>
+                <br><br>
+                Medicae: <span id="medicae">{{ attributes.medicae }}</span>
+                Total: <span  id="medicaetot">{{ skills_total.medicae }}</span>
+                <br>
+                <button class="btn btn-primary" name="medicae" id="med-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="medicae" id="med-down">DOWN</button>
+                <br><br>
+                Persuasion: <span id="persuasion">{{ attributes.persuasion }}</span>
+                Total: <span  id="persuasiontot">{{ skills_total.persuasion }}</span>
+                <br>
+                <button class="btn btn-primary" name="persuasion" id="per-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="persuasion" id="bper-down">DOWN</button>
+                <br><br>
+                Pilot: <span id="pilot">{{ attributes.pilot }}</span>
+                Total: <span  id="pilottot">{{ skills_total.pilot }}</span>
+                <br>
+                <button class="btn btn-primary" name="pilot" id="pil-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="pilot" id="pil-down">DOWN</button>
+                <br><br>
+            </div>
+            <div class="col">
+                Psychic Mastery: <span id="psychic">{{ attributes.psychic }}</span>
+                Total: <span  id="psychictot">{{ skills_total.psychic }}</span>
+                <br>
+                <button class="btn btn-primary" name="psychic" id="psy-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="psychic" id="psy-down">DOWN</button>
+                <br><br>
+                Scholar: <span id="scholar">{{ attributes.scholar }}</span>
+                Total: <span  id="scholartot">{{ skills_total.scholar }}</span>
+                <br>
+                <button class="btn btn-primary" name="scholar" id="sch-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="scholar" id="sch-down">DOWN</button>
+                <br><br>
+                Stealth: <span id="stealth">{{ attributes.stealth }}</span>
+                Total: <span  id="stealthtot">{{ skills_total.stealth }}</span>
+                <br>
+                <button class="btn btn-primary" name="stealth" id="ste-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="stealth" id="ste-down">DOWN</button>
+                <br><br>
+                Survival: <span id="survival">{{ attributes.survival }}</span>
+                Total: <span  id="survivaltot">{{ skills_total.survival }}</span>
+                <br>
+                <button class="btn btn-primary" name="survival" id="sur-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="survival" id="sur-down">DOWN</button>
+                <br><br>
+                Tech: <span id="tech">{{ attributes.tech }}</span>
+                Total: <span  id="techtot">{{ skills_total.tech }}</span>
+                <br>
+                <button class="btn btn-primary" name="tech" id="tec-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="tech" id="tec-down">DOWN</button>
+                <br><br>
+                Weapon Skill: <span id="weapon">{{ attributes.weapon }}</span>
+                Total: <span  id="weapontot">{{ skills_total.weapon }}</span>
+                <br>
+                <button class="btn btn-primary" name="weapon" id="wea-up">UP</button>
+                <br>
+                <button class="btn btn-primary" name="weapon" id="wea-down">DOWN</button>
+                <br><br>
+            </div>
+        </div>
+        <div class="row">
+            <h2>Reset Profile</h2>
+            <button class="btn btn-danger" type="submit" name="reset" id="reset">RESET!</button>
+        </div>
+        <div class="row">
+            <h2>Run Simulation</h2>
+            <button class="btn btn-warning" type="submit" name="simulate" id="simulate" >Simulate!</button>
+        </div>
+        
+        <div id="hidesimulation" style="visibility:hidden"><h3>
+            <div id="lasgun"></div>
+            <div id="boltgun"></div>
+            <div id="plasma gun"></div>
+            <div id="meltagun"></div>
+            <div id="'image">
+                <img src="~\Downloads\Lore_of_Fire.jpg">
+            </div>
+        </h3>
+        </div>
+
+
+    </body>
+
+    <script type="text/javascript">
+        var simulation = ''
+        const element_2 = document.getElementById('simulate')
+        element_2.addEventListener("click", () => {
+            const request = new XMLHttpRequest();
+            request.open('POST', `/simulate`);
+            request.onload = () => {
+                console.log('Simulate')
+                const simulation = JSON.parse(request.responseText);
+                console.log(simulation);
+                document.getElementById('lasgun').innerHTML = 'Lasgun: Armour Remaining - ' + simulation.simulation['lasgun']['armour remaining'] + 
+                                                            ', Resilience Remaining - ' + simulation.simulation['lasgun']['resilience remaining'] +
+                                                            ', Wound Dealt - ' + simulation.simulation['lasgun']['wounds dealt'] +
+                                                            ', Wounds Remaining - ' + simulation.simulation['lasgun']['wounds remaining'];
+                document.getElementById('boltgun').innerHTML = 'Boltgun: Armour Remaining - ' + simulation.simulation['boltgun']['armour remaining'] +
+                                                            ', Resilience Remaining - ' + simulation.simulation['boltgun']['resilience remaining'] +
+                                                            ', Wound Dealt - ' + simulation.simulation['boltgun']['wounds dealt'] +
+                                                            ', Wounds Remaining - ' + simulation.simulation['boltgun']['wounds remaining'];
+                document.getElementById('plasma gun').innerHTML = 'Plasma Gun: Armour Remaining - ' + simulation.simulation['plasma gun']['armour remaining'] +
+                                                            ', Resilience Remaining - ' + simulation.simulation['plasma gun']['resilience remaining'] +
+                                                            ', Wound Dealt - ' + simulation.simulation['plasma gun']['wounds dealt'] +
+                                                            ', Wounds Remaining - ' + simulation.simulation['plasma gun']['wounds remaining'];
+                document.getElementById('meltagun').innerHTML = 'Meltagun: Armour Remaining - ' + simulation.simulation['meltagun']['armour remaining'] + 
+                                                            ', Resilience Remaining - ' + simulation.simulation['meltagun']['resilience remaining'] +
+                                                            ', Wound Dealt - ' + simulation.simulation['meltagun']['wounds dealt'] +
+                                                            ', Wounds Remaining - ' + simulation.simulation['meltagun']['wounds remaining'];
+                if (simulation != '')
+                    {
+                        document.getElementById('hidesimulation').style.visibility = 'visible';
+                    }
+                else document.getElementById('hidesimulation').style.visibility = 'hidden';
+            };
+            request.send();
+        });
+    </script>
+
+    <script type="text/javascript">
+        const element = document.getElementById('reset')
+        element.addEventListener("click", () => {
+            
+            const request = new XMLHttpRequest();
+            request.open('POST', `/reset`);
+            request.onload = () => {
+                //const response = JSON.parse(request.responseText);
+                const response = JSON.parse(request.responseText);
+                console.log(response);
+
+
+                document.getElementById('defence').innerHTML = response.derived['defence'];
+                document.getElementById('resilience').innerHTML = response.derived['resilience'];
+                document.getElementById('shock').innerHTML = response.derived['shock'];
+                document.getElementById('wounds').innerHTML = response.derived['wounds'];
+                document.getElementById('conviction').innerHTML = response.derived['conviction'];
+                document.getElementById('resolve').innerHTML = response.derived['resolve'];
+                document.getElementById('tier').innerHTML = response.tier;
+                document.getElementById('xpcost').innerHTML = response.XP_Cost;
+                var listskill = {{ skill_label|tojson|safe }};
+                for (var i = 0; i < listskill.length; i++) { 
+                    console.log(listskill[i] + 'tot');
+                    document.getElementById(listskill[i] + 'tot').innerHTML = response.skills_total[listskill[i]]; 
+                };
+                for (var i = 0; i < listskill.length; i++) { 
+                    //console.log(listskill[i] + 'tot');
+                    document.getElementById(listskill[i]).innerHTML = response.skills_total[listskill[i]]; 
+                };
+                var listattr = {{ attribute_label|tojson|safe }};
+                for (var i = 0; i < listattr.length; i++) { 
+                    //console.log(listskill[i] + 'tot');
+                    document.getElementById(listattr[i]).innerHTML = response.skills_total[listskill[i]]; 
+                };
+
+            };
+            request.send();
+        });
+    </script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            // run a function for each button
+            document.querySelectorAll('.btn-primary').forEach(button => { 
+
+                // run a function when any button is clicked
+                button.onclick = () => {
+
+                    //new AJAX request
+                    const request = new XMLHttpRequest();
+
+                    // to the endpoint `${button.id}` with method 'POST'
+                    // request.open('POST', `/${button.id}`);
+                    var buttonname = event.target.name
+                    request.open('POST', `/button/${button.id}/${buttonname}`);
+                    
+
+                    //what to do after receiving response
+                    request.onload = () => {
+
+                        //get the response text
+                        const response = JSON.parse(request.responseText);
+                        // console.log(request.responseText);
+                        // {% for skill in skill_label %}
+                        //     console.log({{ skill }});
+                        // {% endfor %}
+                        //replace the attribute count with the updated number of votes 
+                        document.getElementById(buttonname).innerHTML = response.attributes[buttonname];
+                        document.getElementById('defence').innerHTML = response.derived['defence'];
+                        document.getElementById('resilience').innerHTML = response.derived['resilience'];
+                        document.getElementById('shock').innerHTML = response.derived['shock'];
+                        document.getElementById('wounds').innerHTML = response.derived['wounds'];
+                        document.getElementById('conviction').innerHTML = response.derived['conviction'];
+                        document.getElementById('resolve').innerHTML = response.derived['resolve'];
+                        document.getElementById('tier').innerHTML = response.tier;
+                        document.getElementById('xpcost').innerHTML = response.XP_Cost;
+                        // {% for skill in skill_label %}
+                        //     {% if skill == "athletics" %}
+                        //         console.log({{ skill }}, {{ skills_total[0] }})
+                        //         var storestring = {{ skill }} + 'tot'
+                        //         console.log(storestring)
+                        //         // document.getElementById(toString({{ skill }}) + 'tot').innerHTML = response.skills_total[{{ skill }}];
+
+                        //         //document.getElementById(buttonname + 'tot').innerHTML = response.skills_total[skill];
+                        //     {% endif %}
+                        // {% endfor %}
+                        var listskill = {{ skill_label|tojson|safe }};
+                        for (var i = 0; i < listskill.length; i++) { 
+                            //console.log(listskill[i] + 'tot');
+                            document.getElementById(listskill[i] + 'tot').innerHTML = response.skills_total[listskill[i]]; 
+                        };
+
+                        
+                        // let text = "";
+                        // for (let i = 0; i < skill_label; i++) {
+                        // text = skill_label[i] + "<br>";
+                        // console.log(text)
+                        // }
+
+                    }; 
+
+                    //actually send the request
+                    request.send();
+                };
+            });
+        });
+    </script>
+</html>
