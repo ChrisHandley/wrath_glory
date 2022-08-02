@@ -563,8 +563,13 @@ app.layout = dbc.Container([
 )
 def faction_select(species_selected):
     print("species ", species_selected)
-    faction_selected = [{'label': 'Anhrathe', 'value': 'Anhrathe'},
-                        {'label': 'Asuryani', 'value': 'Asuryani'}]
+    # print(faction_list)
+    faction_selected = faction_list[species_selected]
+    if faction_selected == None:
+        faction_selected = {'label': 'Ork', 'value': 'Ork'}
+    print(faction_selected)
+    # faction_selected = [{'label': 'Anhrathe', 'value': 'Anhrathe'},
+    #                     {'label': 'Asuryani', 'value': 'Asuryani'}]
     return(faction_selected)
 
 
