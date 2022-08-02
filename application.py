@@ -7,9 +7,13 @@ import dash_core_components as dcc
 import base64
 from dash.dependencies import Output, Input
 from factionKeywords import keywords_factions
-from test_list import test_list
+from humanKeywords import keywords_humans_imperial, keywords_humans_imperial_sub, keywords_humans_chaos, keywords_humans_chaos_sub
+from astartesKeywords import keywords_astartes_imperial, keywords_astartes_imperial_sub, keywords_primaris_imperial, keywords_primaris_imperial_sub
+from astartesKeywords import keywords_astartes_chaos, keywords_astartes_chaos_sub 
+from aeldariKeywords import keywords_aeldari, keywords_aeldari_sub, keywords_drukhari, keywords_drukhari_sub
+from abhumanKeywords import keywords_abhumans_chaos, keywords_abhumans_chaos_sub, keywords_abhumans_imperial, keywords_abhumans_imperial_sub
 
-app = dash.Dash(__name__, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.FLATLY],
+app = dash.Dash(__name__, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.COSMO],
                 meta_tags=[{'name': 'viewport',
                             'content': 'width=device-width, initial-scale=1.0'}]
                 )
@@ -52,11 +56,16 @@ skill_cost = [0, 2, 6, 12, 20, 30, 42, 56, 72]
 XP_Cost = 0
 
 species_list = [
-    {'label':'Human', 'value':'Human'},
-    {'label':'Ork', 'value':'Ork'},
-    {'label':'Aeldari', 'value':'Aeldari'},
     {'label':'Adeptus Astartes', 'value':'Adeptus Astartes'},
+    {'label':'Aeldari', 'value':'Aeldari'},
+    {'label':'Drukhari', 'value':'Drukhari'},
+    {'label':'Human', 'value':'Human'},
+    {'label':'Kroot', 'value':'Kroot'},
+    {'label':'Ogryn', 'value':'Ogryn'},
+    {'label':'Ork', 'value':'Ork'},
+    {'label':'Ratling', 'value':'Ratling'},
     {'label':'Primaris Astartes', 'value':'Primaris Astartes'},
+
 ]
 
 species = [dbc.DropdownMenuItem(i) for i in species_list]
@@ -71,6 +80,36 @@ maximums_attr = {
         "intellect": 8,
         "fellowship": 8,
         "speed": 8
+    },
+    "Ogryn": {
+        "strength": 12,
+        "toughness": 12,
+        "agility": 7,
+        "initiative": 4,
+        "willpower": 8,
+        "intellect": 1,
+        "fellowship": 4,
+        "speed": 8
+    },
+    "Ratling": {
+        "strength": 6,
+        "toughness": 6,
+        "agility": 10,
+        "initiative": 10,
+        "willpower": 8,
+        "intellect": 8,
+        "fellowship": 10,
+        "speed": 7
+    },
+    "Kroot": {
+        "strength": 12,
+        "toughness": 12,
+        "agility": 12,
+        "initiative": 12,
+        "willpower": 10,
+        "intellect": 6,
+        "fellowship": 6,
+        "speed": 10
     },
     "Ork": {
         "strength": 12,
@@ -88,6 +127,16 @@ maximums_attr = {
         "agility": 12,
         "initiative": 12,
         "willpower": 12,
+        "intellect": 10,
+        "fellowship": 6,
+        "speed": 10
+    },
+    "Aeldari": {
+        "strength": 8,
+        "toughness": 8,
+        "agility": 12,
+        "initiative": 12,
+        "willpower": 10,
         "intellect": 10,
         "fellowship": 6,
         "speed": 10
@@ -117,21 +166,18 @@ maximums_attr = {
 
 keywords_species={
     "Human": None,
-    "Adeptus Astartes": "[Chapter]",
-    "Primaris Astartes": "[Chapter], Imperium, Primaris",
+    "Adeptus Astartes": "[Chapter], Adeptus Astartes",
+    "Primaris Astartes": "[Chapter], Adeptus Astartes, Primaris",
     "Aeldari": None,
+    "Drukhari": None,
     "Ork": "[Clan]",
+    "Ogryn": "Abhuman",
+    "Ratling": "Abhuman",
+    "Kroot": None,
 }
 
 faction_list=keywords_factions
-
-
-keyword_list_master = [
-    {'label': 'UP', 'value': 'UP'},
-    {'label': 'DOWN', 'value': 'DOWN'}
-    ]
-
-
+human_imperial_factions = keywords_humans_imperial
 
 
 app.layout = dbc.Container([
@@ -186,50 +232,6 @@ app.layout = dbc.Container([
     dbc.Row(
         [
             dbc.Col([
-                        html.H5("S", style={"textAlign": "center"}),
-                        dcc.Input(
-                            id="strength".format("number"),
-                            type="number",
-                            placeholder="input type {}".format("number"), min=1, max=12, value=1),
-                        html.H5("A", style={"textAlign": "center"}),
-                        dcc.Input(
-                            id="agility".format("number"),
-                            type="number",
-                            placeholder="input type {}".format("number"), min=1, max=12, value=1),
-                        html.H5("WIL", style={"textAlign": "center"}),
-                        dcc.Input(
-                            id="willpower".format("number"),
-                            type="number",
-                            placeholder="input type {}".format("number"), min=1, max=12, value=1),
-                        html.H5("FEL", style={"textAlign": "center"}),
-                        dcc.Input(
-                            id="fellowship".format("number"),
-                            type="number",
-                            placeholder="input type {}".format("number"), min=1, max=12, value=1),   
-                    ], width=2),
-            dbc.Col([
-                        html.H5("T", style={"textAlign": "center"}),
-                        dcc.Input(
-                            id="toughness".format("number"),
-                            type="number",
-                            placeholder="input type {}".format("number"), min=1, max=12, value=1),
-                        html.H5("I", style={"textAlign": "center"}),
-                        dcc.Input(
-                            id="initiative".format("number"),
-                            type="number",
-                            placeholder="input type {}".format("number"), min=1, max=12, value=1),
-                        html.H5("INT", style={"textAlign": "center"}),
-                        dcc.Input(
-                            id="intelligence".format("number"),
-                            type="number",
-                            placeholder="input type {}".format("number"), min=1, max=12, value=1),
-                        html.H5("ARM", style={"textAlign": "center"}),
-                        dcc.Input(
-                            id="armour".format("number"),
-                            type="number",
-                            placeholder="input type {}".format("number"), min=0, max=12, value=0),
-                    ], width=2),
-            dbc.Col([
                 # dbc.Row([dbc.DropdownMenu(label="species dropdown", size="lg", children=species, className="mb-3")]),
                 dbc.Row(
                     [
@@ -243,7 +245,7 @@ app.layout = dbc.Container([
                         dbc.Col(html.H5("Faction")),
                         dbc.Col(
                             dcc.Dropdown(id="faction_selected",
-                                multi=False, clearable=False, value="Imperium"
+                                multi=False, clearable=False, #value="Imperium"
                                 ),
                                 width=3, style={"textAlign": "left"}
                             ),
@@ -251,14 +253,73 @@ app.layout = dbc.Container([
                     ]),
                 html.Hr(),
                 dbc.Row([
-                    dbc.Col(html.H5("Keywords"), width=2),
+                    dbc.Col(html.H5("Species Keywords"), width=2),
+                    dbc.Col(html.H5(id="species_keywords"), width=6),
                 ]),
                 dbc.Row([
-                    dbc.Col(html.H5(id="species_keywords"), width=2),
-                    dbc.Col(dcc.Dropdown(options=keyword_list_master, id="keyword_list", multi=True,
-                            clearable=True, placeholder="Select Keywords"))
+                    dbc.Col(html.H5("Faction Keyword"), width=3),
+                    dbc.Col(dcc.Dropdown(id="faction_keyword_list", multi=False,
+                            clearable=True, placeholder="Select Keywords"), width=8),
                 ]),
-                html.Hr(),
+                dbc.Row([
+                    dbc.Col(html.H5("Sub Faction Keyword"), width=3),
+                    dbc.Col(dcc.Dropdown(id="subfaction_keyword_list", multi=True,
+                            clearable=True, placeholder="Select Keywords"), width=8),
+                ]),
+                dbc.Row([
+                    dbc.Col(html.H5("ANY Keyword"), width=3),
+                    dbc.Col(dcc.Dropdown(id="all_keywords", multi=True,
+                            clearable=True, placeholder="Any Keyword"), width=8)
+                ]),
+            html.Hr(),
+            ]),
+        ]),
+        dbc.Row([
+            dbc.Col([
+                html.H5("S", style={"textAlign": "center"}),
+                dcc.Input(
+                    id="strength".format("number"),
+                    type="number",
+                    placeholder="input type {}".format("number"), min=1, max=12, value=1),
+                html.H5("A", style={"textAlign": "center"}),
+                dcc.Input(
+                    id="agility".format("number"),
+                    type="number",
+                    placeholder="input type {}".format("number"), min=1, max=12, value=1),
+                html.H5("WIL", style={"textAlign": "center"}),
+                dcc.Input(
+                    id="willpower".format("number"),
+                    type="number",
+                    placeholder="input type {}".format("number"), min=1, max=12, value=1),
+                html.H5("FEL", style={"textAlign": "center"}),
+                dcc.Input(
+                    id="fellowship".format("number"),
+                    type="number",
+                    placeholder="input type {}".format("number"), min=1, max=12, value=1),   
+            ], width=3),
+            dbc.Col([
+                html.H5("T", style={"textAlign": "center"}),
+                dcc.Input(
+                    id="toughness".format("number"),
+                    type="number",
+                    placeholder="input type {}".format("number"), min=1, max=12, value=1),
+                html.H5("I", style={"textAlign": "center"}),
+                dcc.Input(
+                    id="initiative".format("number"),
+                    type="number",
+                    placeholder="input type {}".format("number"), min=1, max=12, value=1),
+                html.H5("INT", style={"textAlign": "center"}),
+                dcc.Input(
+                    id="intelligence".format("number"),
+                    type="number",
+                    placeholder="input type {}".format("number"), min=1, max=12, value=1),
+                html.H5("ARM", style={"textAlign": "center"}),
+                dcc.Input(
+                    id="armour".format("number"),
+                    type="number",
+                    placeholder="input type {}".format("number"), min=0, max=12, value=0),
+            ], width=3),
+            dbc.Col([
                 dbc.Row(
                     [
                         dbc.Col(html.H5("Total XP", style={"textAlign": "left"})),
@@ -348,7 +409,7 @@ app.layout = dbc.Container([
                         dbc.Col(html.Div(id="totalShock"),),
                     ]
                 ),
-            ])
+            ]),
         ],
     ),
     html.Hr(),
@@ -558,16 +619,90 @@ app.layout = dbc.Container([
 
 
 @app.callback(
+    Output("subfaction_keyword_list", "options"),
+    Input("faction_keyword_list", "value"),
+    Input("faction_selected", "value"),
+    Input("species_selected", "value")
+)
+def subfaction_keyword_select(faction_keyword_list, faction_selected, species_selected):
+    print(faction_selected, species_selected)
+    print(faction_keyword_list)
+    subfaction_keyword_list = [{'label': 'Unaligned', 'value': 'Unaligned'}]
+    if faction_keyword_list == None:
+        subfaction_keyword_list = [{'label': 'Unaligned', 'value': 'Unaligned'}]
+    elif species_selected == "Aeldari":
+        subfaction_keyword_list = keywords_aeldari_sub[faction_selected]
+    elif species_selected == "Drukhari":
+        subfaction_keyword_list = keywords_drukhari_sub[faction_selected]
+    elif faction_selected == "Imperium":
+        if species_selected == "Ogryn":
+            subfaction_keyword_list = keywords_abhumans_imperial_sub[faction_keyword_list]
+        elif species_selected == "Ratling":
+            subfaction_keyword_list = keywords_abhumans_imperial_sub[faction_keyword_list]
+        elif species_selected == "Human":
+            subfaction_keyword_list = keywords_humans_imperial_sub[faction_keyword_list]
+        elif species_selected == "Adeptus Astartes":
+            subfaction_keyword_list = keywords_astartes_imperial_sub
+        elif species_selected == "Primaris Astartes":
+            subfaction_keyword_list = keywords_primaris_imperial_sub
+    elif faction_selected == "Chaos":
+        if species_selected == "Ogryn":
+            subfaction_keyword_list = keywords_abhumans_chaos_sub[faction_keyword_list]
+        elif species_selected == "Ratling":
+            subfaction_keyword_list = keywords_abhumans_chaos_sub[faction_keyword_list]
+        elif species_selected == "Human":
+            subfaction_keyword_list = keywords_humans_chaos_sub[faction_keyword_list]
+        elif species_selected == "Adeptus Astartes":
+            subfaction_keyword_list = keywords_astartes_chaos_sub
+    print(subfaction_keyword_list)
+    return(subfaction_keyword_list)
+
+@app.callback(
+    Output("faction_keyword_list", "options"),
+    Input("faction_selected", "value"),
+    Input("species_selected", "value")
+)
+def faction_keyword_select(faction_selected, species_selected):
+    # print(faction_selected, species_selected)
+    faction_keyword_list = [{'label': 'Unaligned', 'value': 'Unaligned'}]
+    if faction_selected == "Aeldari":
+        faction_keyword_list = keywords_aeldari
+    if faction_selected == "Drukhari":
+        faction_keyword_list = keywords_drukhari
+    if faction_selected == "Imperium":
+        if species_selected == "Ogryn":
+            faction_keyword_list = keywords_abhumans_imperial
+        elif species_selected == "Ratling":
+            faction_keyword_list = keywords_abhumans_imperial
+        elif species_selected == "Human":
+            faction_keyword_list = human_imperial_factions
+        elif species_selected == "Adeptus Astartes":
+            faction_keyword_list = keywords_astartes_imperial
+        elif species_selected == "Primaris Astartes":
+            faction_keyword_list = keywords_primaris_imperial
+    elif faction_selected == "Chaos":
+        if species_selected == "Ogryn":
+            faction_keyword_list = keywords_abhumans_chaos
+        elif species_selected == "Ratling":
+            faction_keyword_list = keywords_abhumans_chaos
+        elif species_selected == "Human":
+            faction_keyword_list = keywords_humans_chaos
+        elif species_selected == "Adeptus Astartes":
+            faction_keyword_list = keywords_astartes_chaos
+    else:
+        faction_keyword_list = [{'label': 'Unaligned', 'value': 'Unaligned'}]
+    return(faction_keyword_list)
+
+@app.callback(
     Output("faction_selected", "options"),
     Input("species_selected", "value")
 )
 def faction_select(species_selected):
-    print("species ", species_selected)
+    # print("species ", species_selected)
     # print(faction_list)
     faction_selected = faction_list[species_selected]
     if faction_selected == None:
-        faction_selected = {'label': 'Ork', 'value': 'Ork'}
-    print(faction_selected)
+        faction_selected = {'label': 'None', 'value': 'none'}
     # faction_selected = [{'label': 'Anhrathe', 'value': 'Anhrathe'},
     #                     {'label': 'Asuryani', 'value': 'Asuryani'}]
     return(faction_selected)
