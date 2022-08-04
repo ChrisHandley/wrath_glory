@@ -177,7 +177,7 @@ human_imperial_factions = keywords_humans_imperial
 
 
 app.layout = dbc.Container([
-    dbc.Row(dbc.Col(html.Img(src=app.get_asset_url('WrathGloryBanner.png')), style={"textAlign": "center"}, width=12)),
+    dbc.Row(dbc.Col(html.Img(src=app.get_asset_url('WrathGloryBanner.png')), style={"textAlign": "center"})),
     dbc.Row(dbc.Col(html.H1("Wrath and Glory Character Builder",
                             style={"textAlign": "center"}), width=12)),
     html.Hr(),
@@ -185,14 +185,14 @@ app.layout = dbc.Container([
         [
             dbc.Row(
                 [
-                    dbc.Col(html.H5("Total XP", style={"textAlign": "left"})),
-                    dbc.Col(html.H5("Tier", style={"textAlign": "left"})),
+                    dbc.Col(html.Div("Total XP", style={"textAlign": "left"})),
+                    dbc.Col(html.Div("Tier", style={"textAlign": "left"})),
                 ]
             ),
             dbc.Row(
                 [
                     # dbc.Col(html.Div(id="totalCost", style={"textAlign": "left"})),
-                    dbc.Col(html.Div(id="totalCost", style={"textAlign": "left"})),
+                    dbc.Col(html.Div(id="totalCost", style={"textAlign": "left"},)),
                     dbc.Col(html.Div(id="tier_result", style={"textAlign": "left"})),
                     # dbc.Col(dcc.Input(
                     #     id="tier".format("number"),
@@ -203,19 +203,13 @@ app.layout = dbc.Container([
             ),
             html.Hr(),
 
-            dbc.Col(html.H3("Attributes",
-                            style={"textAlign": "center"}), width=3),
-            dbc.Col([
-                # html.Div(id='placeholder'),
-                html.Div(
-                            id="attribute_check"),], width=3
-            ),
+            
             dbc.Col([
                 dbc.Row([
                         dbc.Col(
                         # html.Div(id='placeholder'),
                             html.H5("Tier",
-                            style={"textAlign": "left"}), width=3),
+                            style={"textAlign": "left"}), width=2),
                         dbc.Col(
                         # html.Div(id='placeholder'),
                             html.H5("1:",
@@ -234,7 +228,7 @@ app.layout = dbc.Container([
                             style={"textAlign": "center"}), width=2),
                 ]),
                 dbc.Row([
-                    dbc.Col(html.H5("NPC Threat Level", style={"textAlign": "left"}), width=3),
+                    dbc.Col(html.H5("NPC Threat Level", style={"textAlign": "left"}), width=2),
                     dbc.Col(html.H5(id="threat_level1", style={"textAlign": "center"}), width=2),
                     dbc.Col(html.H5(id="threat_level2", style={"textAlign": "center"}), width=2),
                     dbc.Col(html.H5(id="threat_level3", style={"textAlign": "center"}), width=2),
@@ -243,7 +237,7 @@ app.layout = dbc.Container([
                 ])    
             ]),
             # dbc.Col(html.Button(id='run', children='PDF', n_clicks=0),)
-        ]
+        ], 
     ),   
     html.Hr(),
     dbc.Row(
@@ -271,7 +265,7 @@ app.layout = dbc.Container([
                 html.Hr(),
                 dbc.Row([
                     dbc.Col(html.H5("Species Keywords"), width=2),
-                    dbc.Col(html.H5(id="species_keywords"), width=6),
+                    dbc.Col(html.Div(id="species_keywords"), width=6),
                 ]),
                 dbc.Row([
                     dbc.Col(html.H5("Faction Keyword"), width=3),
@@ -293,74 +287,67 @@ app.layout = dbc.Container([
         ]
     ),
     dbc.Row([
+        dbc.Col(html.H3("Attributes",
+                            style={"textAlign": "center"}), width=3),
         dbc.Col([
-            dbc.Row(html.H3("S", style={"textAlign": "center"})),
-            dbc.Row(html.H3("A", style={"textAlign": "center"})),
-            dbc.Row(html.H3("WIL", style={"textAlign": "center"})),
-            dbc.Row(html.H3("FEL", style={"textAlign": "center"})), 
-        ], width=1),
+            # html.Div(id='placeholder'),
+            html.Div(
+                        id="attribute_check"),], width=7
+        ),
+    ]),
+    dbc.Row([
         dbc.Col([
-            dbc.Row(html.H3(id="strength", style={"textAlign": "center"})),
-            dbc.Row(html.H3(id="agility", style={"textAlign": "center"})),
-            dbc.Row(html.H3(id="willpower", style={"textAlign": "center"})),
-            dbc.Row(html.H3(id="fellowship", style={"textAlign": "center"})),
-            # dbc.Input(
-            #     id="strength".format("number"),
-            #     type="number",
-            #     placeholder="input type {}".format("number"), min=1, max=12, value=1),
-            # dbc.Input(
-            #     id="agility".format("number"),
-            #     type="number",
-            #     placeholder="input type {}".format("number"), min=1, max=12, value=1),
-            # dbc.Input(
-            #     id="willpower".format("number"),
-            #     type="number",
-            #     placeholder="input type {}".format("number"), min=1, max=12, value=1),
-            # dbc.Input(
-            #     id="fellowship".format("number"),
-            #     type="number",
-            #     placeholder="input type {}".format("number"), min=1, max=12, value=1),
-        ], width=1),
+            dbc.Row([
+                dbc.Col(dbc.Row(html.Div("S", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(html.Div(id="strength", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="success", id='up_strength', n_clicks=0),),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="danger", id='down_strength', n_clicks=0),),)
+            ]),
+            dbc.Row([
+                dbc.Col(dbc.Row(html.Div("A", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(html.Div(id="agility", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="success", id='up_agility', n_clicks=0),),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="danger", id='down_agility', n_clicks=0),),)
+            ]),
+            dbc.Row([
+                dbc.Col(dbc.Row(html.Div("WIL", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(html.Div(id="willpower", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="success", id='up_willpower', n_clicks=0),),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="danger", id='down_willpower', n_clicks=0),),)
+            ]),
+            dbc.Row([
+                dbc.Col(dbc.Row(html.Div("FEL", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(html.Div(id="fellowship", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="success", id='up_fellowship', n_clicks=0),),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="danger", id='down_fellowship', n_clicks=0),),)
+            ]),
+        ]),
         dbc.Col([
-            html.Div(),
-            dbc.Button("+1", className="me-1", color="success", id='up_strength', n_clicks=0),
-            dbc.Button("+1", className="me-1", color="success", id='up_agility', n_clicks=0),
-            dbc.Button("+1", className="me-1", color="success", id='up_willpower', n_clicks=0),
-            dbc.Button("+1", className="me-1", color="success", id='up_fellowship', n_clicks=0),
-        ], width=1),
-        dbc.Col([
-            html.Div(),
-            dbc.Button("-1", className="me-1", color="danger", id='down_strength', n_clicks=0),
-            dbc.Button("-1", className="me-1", color="danger", id='down_agility', n_clicks=0),
-            dbc.Button("-1", className="me-1", color="danger", id='down_willpower', n_clicks=0),
-            dbc.Button("-1", className="me-1", color="danger", id='down_fellowship', n_clicks=0),
-        ], width=1),
-        dbc.Col([
-            dbc.Row(html.H3("T", style={"textAlign": "center"})),
-            dbc.Row(html.H3("I", style={"textAlign": "center"})),
-            dbc.Row(html.H3("INT", style={"textAlign": "center"})),
-            dbc.Row(html.H3("ARM", style={"textAlign": "center"})), 
-        ], width=1),
-        dbc.Col([
-            dbc.Row(html.H3(id="toughness", style={"textAlign": "center"})),
-            dbc.Row(html.H3(id="initiative", style={"textAlign": "center"})),
-            dbc.Row(html.H3(id="intelligence", style={"textAlign": "center"})),
-            dbc.Row(html.H3(id="armour", style={"textAlign": "center"})),
-        ], width=1),
-        dbc.Col([
-            html.Div(),
-            dbc.Button("+1", className="me-1", color="success", id='up_toughness', n_clicks=0),
-            dbc.Button("+1", className="me-1", color="success", id='up_initiative', n_clicks=0),
-            dbc.Button("+1", className="me-1", color="success", id='up_intelligence', n_clicks=0),
-            dbc.Button("+1", className="me-1", color="success", id='up_armour', n_clicks=0),
-        ], width=1),
-        dbc.Col([
-            html.Div(),
-            dbc.Button("-1", className="me-1", color="danger", id='down_toughness', n_clicks=0),
-            dbc.Button("-1", className="me-1", color="danger", id='down_initiative', n_clicks=0),
-            dbc.Button("-1", className="me-1", color="danger", id='down_intelligence', n_clicks=0),
-            dbc.Button("-1", className="me-1", color="danger", id='down_armour', n_clicks=0),
-        ], width=1),
+            dbc.Row([
+                dbc.Col(dbc.Row(html.Div("T", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(html.Div(id="toughness", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="success", id='up_toughness', n_clicks=0),),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="danger", id='down_toughness', n_clicks=0),),)
+            ]),
+            dbc.Row([
+                dbc.Col(dbc.Row(html.Div("I", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(html.Div(id="initiative", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="success", id='up_initiative', n_clicks=0),),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="danger", id='down_initiative', n_clicks=0),),)
+            ]),
+            dbc.Row([
+                dbc.Col(dbc.Row(html.Div("INT", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(html.Div(id="intelligence", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="success", id='up_intelligence', n_clicks=0),),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="danger", id='down_intelligence', n_clicks=0),),)
+            ]),
+            dbc.Row([
+                dbc.Col(dbc.Row(html.Div("ARM", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(html.Div(id="armour", style={"textAlign": "center"})),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="success", id='up_armour', n_clicks=0),),),
+                dbc.Col(dbc.Row(dbc.Button("+1", className="me-1", color="danger", id='down_armour', n_clicks=0),),)
+            ]),
+        ]),
     ]),
     html.Hr(),
     dbc.Row(
@@ -370,74 +357,68 @@ app.layout = dbc.Container([
             dbc.Row(
                 [
                     dbc.Col(
-                        html.H5("Conviction", style={"textAlign": "left"}),
-                    width=4),
+                        html.Div("Conviction", style={"textAlign": "left"}),
+                    width=2),
                     dbc.Col(
-                        html.H5("Size", style={"textAlign": "left"}),
-                    width=4)
+                        html.Div("Size", style={"textAlign": "left"}),
+                    width=2)
                 ]
             ),
             dbc.Row(
                 [
-                    dbc.Col(html.Div(id="totalConviction"),width=4),
-                    dbc.Col(dcc.Input(
-                        id="size".format("number"),
-                        type="number",
-                        placeholder="input type {}".format("number"), min=0, max=8, value=0), width=2),
-                    dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_size', n_clicks=0), width=1),
-                    dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_size', n_clicks=0), width=1),
-                ]
-            ),
-            dbc.Row(
-                [
-                    dbc.Col(
-                        html.H5("Resolve", style={"textAlign": "left"}),
-                    width=4),
-                    dbc.Col(
-                        html.H5("Speed", style={"textAlign": "left"}),
-                    width=4)
-                ]
-            ),
-            dbc.Row(
-                [
-                    dbc.Col(html.Div(id="totalResolve"), width=4),
-                    dbc.Col(dcc.Input(
-                        id="speed".format("number"),
-                        type="number",
-                        placeholder="input type {}".format("number"), min=0, max=12, value=0), width=2),
-                    dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_speed', n_clicks=0), width=1),
-                    dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_speed', n_clicks=0), width=1),
+                    dbc.Col(html.Div(id="totalConviction"),width=2),
+                    dbc.Col(html.Div(id="size", style={"textAlign": "left"}), width=1),
+                    dbc.Col(dbc.Button("+1", className="me-md-2", color="success", id='up_size', n_clicks=0), width=2),
+                    dbc.Col(dbc.Button("-1", className="me-md-2", color="danger", id='down_size', n_clicks=0), width=2),
                 ]
             ),
             dbc.Row(
                 [
                     dbc.Col(
-                        html.H5("Defence", style={"textAlign": "left"}),
-                    width=4),
+                        html.Div("Resolve", style={"textAlign": "left"}),
+                    width=2),
                     dbc.Col(
-                        html.H5("Resilience", style={"textAlign": "left"}),
-                    width=4)
+                        html.Div("Speed", style={"textAlign": "left"}),
+                    width=2)
                 ]
             ),
             dbc.Row(
                 [
-                    dbc.Col(html.Div(id="totalDefence"),width=4),
+                    dbc.Col(html.Div(id="totalResolve"), width=2),
+                    dbc.Col(html.Div(id="speed", style={"textAlign": "left"}), width=1),
+                    dbc.Col(dbc.Button("+1", className="me-md-2", color="success", id='up_speed', n_clicks=0), width=2),
+                    dbc.Col(dbc.Button("-1", className="me-md-2", color="danger", id='down_speed', n_clicks=0), width=2),
+                ]
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.Div("Defence", style={"textAlign": "left"}),
+                    width=2),
+                    dbc.Col(
+                        html.Div("Resilience", style={"textAlign": "left"}),
+                    width=2)
+                ]
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(html.Div(id="totalDefence"),width=2),
                     dbc.Col(html.Div(id="totalResilience"),),
                 ]
             ),
             dbc.Row(
                 [
                     dbc.Col(
-                        html.H5("Wounds", style={"textAlign": "left"}),
-                    width=4),
+                        html.Div("Wounds", style={"textAlign": "left"}),
+                    width=2),
                     dbc.Col(
-                        html.H5("Shock", style={"textAlign": "left"}),
-                    width=4)
+                        html.Div("Shock", style={"textAlign": "left"}),
+                    width=2)
                 ]
             ),
             dbc.Row(
                 [
-                    dbc.Col(html.Div(id="totalWounds"),width=4),
+                    dbc.Col(html.Div(id="totalWounds"),width=2),
                     dbc.Col(html.Div(id="totalShock"),),
                 ]
             ),
@@ -457,16 +438,14 @@ app.layout = dbc.Container([
     ),
     dbc.Row(
         [
-            dbc.Col(dcc.Input(
-                    id="athletics".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalAthletics"),),
-            dbc.Col(dcc.Input(
-                    id="medicae".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-             dbc.Col(html.Div(id="totalMedicae"),),
+            dbc.Col(html.H3(id="athletics", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_athletics', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_athletics', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalAthletics"),),
+            dbc.Col(html.H3(id="medicae", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_medicae', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_medicae', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalMedicae"),),
         ]
     ),
     dbc.Row(
@@ -479,16 +458,14 @@ app.layout = dbc.Container([
     ),
         dbc.Row(
         [
-            dbc.Col(dcc.Input(
-                    id="awareness".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalAwareness"),),
-            dbc.Col(dcc.Input(
-                    id="persuasion".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalPersuasion"),),
+            dbc.Col(html.H3(id="awareness", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_awareness', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_awareness', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalAwareness"),),
+            dbc.Col(html.H3(id="persuasion", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_persuasion', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_persuasion', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalPersuasion"),),
         ]
     ),
     dbc.Row(
@@ -501,16 +478,14 @@ app.layout = dbc.Container([
     ),
         dbc.Row(
         [
-            dbc.Col(dcc.Input(
-                    id="ballistic".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalBallistic"),),
-            dbc.Col(dcc.Input(
-                    id="pilot".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalPilot"),),
+            dbc.Col(html.H3(id="ballistic", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_ballistic', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_ballistic', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalBallistic"),),            
+            dbc.Col(html.H3(id="pilot", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_pilot', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_pilot', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalPilot"),),
         ]
     ),
     dbc.Row(
@@ -523,16 +498,14 @@ app.layout = dbc.Container([
     ),
         dbc.Row(
         [
-            dbc.Col(dcc.Input(
-                    id="cunning".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalCunning"),),
-            dbc.Col(dcc.Input(
-                    id="psychic".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalPsychic"),),
+            dbc.Col(html.H3(id="cunning", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_cunning', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_cunning', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalCunning"),),            
+            dbc.Col(html.H3(id="psychic", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_psychic', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_psychic', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalPsychic"),),
         ]
     ),
     dbc.Row(
@@ -545,16 +518,14 @@ app.layout = dbc.Container([
     ),
         dbc.Row(
         [
-            dbc.Col(dcc.Input(
-                    id="deception".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalDeception"),),
-            dbc.Col(dcc.Input(
-                    id="scholar".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalScholar"),),
+            dbc.Col(html.H3(id="deception", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_deception', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_deception', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalDeception"),),
+            dbc.Col(html.H3(id="scholar", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_scholar', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_scholar', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalScholar"),),
         ]
     ),
     dbc.Row(
@@ -567,16 +538,14 @@ app.layout = dbc.Container([
     ),
         dbc.Row(
         [
-            dbc.Col(dcc.Input(
-                    id="insight".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalInsight"),),
-            dbc.Col(dcc.Input(
-                    id="stealth".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalStealth"),),
+            dbc.Col(html.H3(id="insight", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_insight', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_insight', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalInsight"),),
+            dbc.Col(html.H3(id="stealth", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_stealth', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_stealth', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalStealth"),),
         ]
     ),
     dbc.Row(
@@ -589,16 +558,14 @@ app.layout = dbc.Container([
     ),
         dbc.Row(
         [
-            dbc.Col(dcc.Input(
-                    id="intimidation".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalIntimidation"),),
-            dbc.Col(dcc.Input(
-                    id="survival".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalSurvival"),),
+            dbc.Col(html.H3(id="intimidation", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_intimidation', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_intimidation', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalIntimidation"),),
+            dbc.Col(html.H3(id="survival", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_survival', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_survival', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalSurvival"),),
         ]
     ),
     dbc.Row(
@@ -611,16 +578,14 @@ app.layout = dbc.Container([
     ),
         dbc.Row(
         [
-            dbc.Col(dcc.Input(
-                    id="investigation".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalInvestigation"),),
-            dbc.Col(dcc.Input(
-                    id="tech".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalTech"),),
+            dbc.Col(html.H3(id="investigation", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_investigation', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_investigation', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalInvestigation"),),
+            dbc.Col(html.H3(id="tech", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_tech', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_tech', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalTech"),),
         ]
     ),
     dbc.Row(
@@ -633,21 +598,73 @@ app.layout = dbc.Container([
     ),
         dbc.Row(
         [
-            dbc.Col(dcc.Input(
-                    id="leadership".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalLeadership"),),
-            dbc.Col(dcc.Input(
-                    id="weapon".format("number"),
-                    type="number",
-                    placeholder="input type {}".format("number"), min=0, max=8, value=0)),
-            dbc.Col(html.Div(id="totalWeapon"),),
+            dbc.Col(html.H3(id="leadership", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_leadership', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_leadership', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalLeadership"),),
+            dbc.Col(html.H3(id="weapon", style={"textAlign": "left"}), width=1),
+            dbc.Col(dbc.Button("+1", className="me-1", color="success", id='up_weapon', n_clicks=0), width=1),
+            dbc.Col(dbc.Button("-1", className="me-1", color="danger", id='down_weapon', n_clicks=0), width=1),
+            dbc.Col(html.H3(id="totalWeapon"),),
         ]
     ),
     html.Div(id="placeholder"),
 
 ])
+
+
+
+@app.callback(
+    # outputs=dict(attr_out=[Output("{}".format(_), "children") for _ in Attributes]),
+    # Output('placeholder', 'children'),
+    Output("speed", "children"),
+    inputs=dict(ups=Input("up_speed", "n_clicks"),
+                downs=Input("down_speed", "n_clicks"),
+                attr_values=Input("speed", "children")
+    )
+)
+def button_attributes4(ups, downs, attr_values):
+    attr_out = attr_values
+    print("value ", attr_values)
+    if attr_out == None:
+        attr_out = 1
+    if "up_speed" == ctx.triggered_id:
+        attr_out +=1
+        if attr_out > 12:
+            attr_out = 12
+    if "down_speed" == ctx.triggered_id:
+        attr_out += -1
+        if attr_out < 1:
+            attr_out = 1
+    # placeholder = "TEST"
+    placeholder = attr_out
+    return placeholder
+
+@app.callback(
+    # outputs=dict(attr_out=[Output("{}".format(_), "children") for _ in Attributes]),
+    # Output('placeholder', 'children'),
+    Output("size", "children"),
+    inputs=dict(ups=Input("up_size", "n_clicks"),
+                downs=Input("down_size", "n_clicks"),
+                attr_values=Input("size", "children")
+    )
+)
+def button_attributes3(ups, downs, attr_values):
+    attr_out = attr_values
+    print("value ", attr_values)
+    if attr_out == None:
+        attr_out = 1
+    if "up_size" == ctx.triggered_id:
+        attr_out +=1
+        if attr_out > 12:
+            attr_out = 12
+    if "down_size" == ctx.triggered_id:
+        attr_out += -1
+        if attr_out < 1:
+            attr_out = 1
+    # placeholder = "TEST"
+    placeholder = attr_out
+    return placeholder
 
 
 @app.callback(
@@ -659,7 +676,7 @@ app.layout = dbc.Container([
                 attr_values=Input("armour", "children")
     )
 )
-def button_attributes(ups, downs, attr_values):
+def button_attributes2(ups, downs, attr_values):
     attr_out = attr_values
     print("value ", attr_values)
     if attr_out == None:
@@ -702,6 +719,36 @@ def button_attributes(ups, downs, attr_values):
             attr_out[i] += -1
             if attr_out[i] < 1:
                 attr_out[i] = 1
+            
+    # placeholder = "TEST"
+    placeholder = attr_out
+    return placeholder
+
+@app.callback(
+    # outputs=dict(attr_out=[Output("{}".format(_), "children") for _ in Attributes]),
+    # Output('placeholder', 'children'),
+    output=[Output("{}".format(_), "children") for _ in Skills],
+    inputs=dict(ups=[Input("up_{}".format(_), "n_clicks") for _ in Skills],
+                downs=[Input("down_{}".format(_), "n_clicks") for _ in Skills],
+                attr_values=[Input("{}".format(_), "children") for _ in Skills]
+    )
+)
+def button_skill(ups, downs, attr_values):
+    attr_out = attr_values
+    for i, attr in enumerate(attr_values):
+        if attr == None:
+            attr_out[i] = 0
+    for i, attr in enumerate(Skills):
+        if "up_{}".format(attr) == ctx.triggered_id:
+            msg = str(attr) + " Button Up was most recently clicked"
+            attr_out[i] +=1
+            if attr_out[i] > 8:
+                attr_out[i] = 8
+        if "down_{}".format(attr) == ctx.triggered_id:
+            msg = str(attr) + " Button Down was most recently clicked"
+            attr_out[i] += -1
+            if attr_out[i] < 0:
+                attr_out[i] = 0
             
     # placeholder = "TEST"
     placeholder = attr_out
@@ -802,7 +849,7 @@ def faction_select(species_selected):
     Output('species_keywords', 'children'),
     inputs=dict(attr=[Input("{}".format(_), "children") for _ in Attributes],
     # species_selected=Input("placeholder", "value"),
-    speed=[Input('speed', 'value')],
+    speed=[Input('speed', 'children')],
     species_selected=[Input('species_selected', 'value')]
     )
 )
@@ -832,8 +879,8 @@ def attribute_checks(attr, speed, species_selected):
 
 @app.callback(
     Output("totalAthletics", "children"),
-    Input("strength", "value"),
-    Input("athletics", "value"),
+    Input("strength", "children"),
+    Input("athletics", "children"),
 )
 def computeStrength(strength, athletics):
     if strength == None:
@@ -847,8 +894,8 @@ def computeStrength(strength, athletics):
 
 @app.callback(
     Output("totalWeapon", "children"),
-    Input("initiative", "value"),
-    Input("weapon", "value"),
+    Input("initiative", "children"),
+    Input("weapon", "children"),
 )
 def computeInitiative(initiative, weapon):
     if initiative == None:
@@ -863,10 +910,10 @@ def computeInitiative(initiative, weapon):
     Output("totalBallistic", "children"),
     Output("totalPilot", "children"),
     Output("totalStealth", "children"),
-    Input("agility", "value"),
-    Input("ballistic", "value"),
-    Input("pilot", "value"),
-    Input("stealth", "value"),
+    Input("agility", "children"),
+    Input("ballistic", "children"),
+    Input("pilot", "children"),
+    Input("stealth", "children"),
 )
 def computeAgility(agility, ballistic, pilot, stealth):
     if agility == None:
@@ -887,11 +934,11 @@ def computeAgility(agility, ballistic, pilot, stealth):
     Output("totalLeadership", "children"),
     Output("totalPsychic", "children"),
     Output("totalSurvival", "children"),
-    Input("willpower", "value"),
-    Input("intimidation", "value"),
-    Input("leadership", "value"),
-    Input("psychic", "value"),
-    Input("survival", "value"),
+    Input("willpower", "children"),
+    Input("intimidation", "children"),
+    Input("leadership", "children"),
+    Input("psychic", "children"),
+    Input("survival", "children"),
 )
 def computeWillpower(willpower, intimidation, leadership, psychic, survival):
     if willpower == None:
@@ -913,12 +960,12 @@ def computeWillpower(willpower, intimidation, leadership, psychic, survival):
     Output("totalScholar", "children"),
     Output("totalInvestigation", "children"),
     Output("totalMedicae", "children"),
-    Input("intelligence", "value"),
-    Input("awareness", "value"),
-    Input("scholar", "value"),
-    Input("tech", "value"),
-    Input("medicae", "value"),
-    Input("investigation", "value"),
+    Input("intelligence", "children"),
+    Input("awareness", "children"),
+    Input("scholar", "children"),
+    Input("tech", "children"),
+    Input("medicae", "children"),
+    Input("investigation", "children"),
 )
 def computeIntelligence(intelligence, awareness, investigation, medicae, scholar, tech):
     if intelligence == None:
@@ -939,11 +986,11 @@ def computeIntelligence(intelligence, awareness, investigation, medicae, scholar
     Output("totalDeception", "children"),
     Output("totalInsight", "children"),
     Output("totalPersuasion", "children"),
-    Input("fellowship", "value"),
-    Input("cunning", "value"),
-    Input("deception", "value"),
-    Input("insight", "value"),
-    Input("persuasion", "value"),
+    Input("fellowship", "children"),
+    Input("cunning", "children"),
+    Input("deception", "children"),
+    Input("insight", "children"),
+    Input("persuasion", "children"),
 )
 def computeFellowship(fellowship, cunning, deception, insight, persuasion):
     if fellowship == None:
@@ -972,7 +1019,7 @@ def computeFellowship(fellowship, cunning, deception, insight, persuasion):
     Output("threat_level3", "children"),
     Output("threat_level4", "children"),
     inputs=dict(attr=[Input("{}".format(_), "children") for _ in Attributes],
-    skill=[Input("{}".format(_), "value") for _ in Skills],
+    skill=[Input("{}".format(_), "children") for _ in Skills],
     armour=Input("armour", "children")
     )
 )
