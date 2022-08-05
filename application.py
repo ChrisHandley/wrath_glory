@@ -1,6 +1,8 @@
 import dash
 import dash_bootstrap_components as dbc
 import base64
+import numpy as np
+import plotly.express as px
 from dash import Output, Input, ctx, html, dcc
 from factionKeywords import keywords_factions
 from humanKeywords import keywords_humans_imperial, keywords_humans_imperial_sub, keywords_humans_chaos, keywords_humans_chaos_sub
@@ -8,6 +10,7 @@ from astartesKeywords import keywords_astartes_imperial, keywords_astartes_imper
 from astartesKeywords import keywords_astartes_chaos, keywords_astartes_chaos_sub 
 from aeldariKeywords import keywords_aeldari, keywords_aeldari_sub, keywords_drukhari, keywords_drukhari_sub
 from abhumanKeywords import keywords_abhumans_chaos, keywords_abhumans_chaos_sub, keywords_abhumans_imperial, keywords_abhumans_imperial_sub
+from dicerolling import combat_simulator
 
 app = dash.Dash(__name__, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.SLATE],
                 meta_tags=[{'name': 'viewport',
@@ -440,7 +443,7 @@ app.layout = dbc.Container([
         ]),
     ),
     html.Hr(),
-    dbc.Row(dbc.Col(html.H3("Skills",
+    dbc.Row(dbc.Col(html.H5("Skills",
                             style={"textAlign": "center"}), width=4)),
     html.Hr(),
     dbc.Row(
@@ -676,8 +679,42 @@ app.layout = dbc.Container([
             
         ]
     ),
+    html.Hr(),
+    dbc.Row(dbc.Col(html.H3("Simulator",
+                            style={"textAlign": "center"}), width=4)),
+    html.Hr(),
+    # dbc.Button(
+    #         "Simulate", id="example-button", className="me-2", n_clicks=0
+    #     ),
+    dcc.Graph(id="graph"),
+    html.P("Mean:"),
+    dcc.Slider(id="mean", min=-3, max=3, value=0, 
+               marks={-3: '-3', 3: '3'}),
+    html.P("Standard Deviation:"),
+    dcc.Slider(id="std", min=1, max=3, value=1, 
+               marks={1: '1', 3: '3'}),
+
 ])
 
+# @app.callback(
+#     Output("graph", "figure"),
+#     Input("example-button", "n_clicks")
+# )
+# def simulate(n):
+#     if "example-button" == ctx.triggered_id:
+#         figure = combat_simulator()
+    
+#     return figure
+
+@app.callback(
+    Output("graph", "figure"), 
+    Input("mean", "value"), 
+    Input("std", "value"))
+def display_color(mean, std):
+    data = np.random.normal(mean, std, size=500) # replace with your own data source
+    # fig = px.histogram(data, range_x=[-10, 10])
+    fig = combat_simulator()
+    return fig
 
 
 @app.callback(

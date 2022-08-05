@@ -40,7 +40,7 @@ keywords_humans_imperial_sub={
         {'label': 'Skitarii', 'value': 'Skitarii'},
         {'label': 'FORGE WORLD', 'value': 'FORGE WORLD'},
     ],
-    'Inquistion': [
+    'Inquisition': [
         {'label': 'Adeptus Administratum', 'value': 'Adeptus Administratum'},
         {'label': 'Adeptus Mechanicus', 'value': 'Adeptus Mechanicus'},
         {'label': 'ORDO', 'value': 'ORDO'}
