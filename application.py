@@ -10,7 +10,7 @@ from astartesKeywords import keywords_astartes_imperial, keywords_astartes_imper
 from astartesKeywords import keywords_astartes_chaos, keywords_astartes_chaos_sub 
 from aeldariKeywords import keywords_aeldari, keywords_aeldari_sub, keywords_drukhari, keywords_drukhari_sub
 from abhumanKeywords import keywords_abhumans_chaos, keywords_abhumans_chaos_sub, keywords_abhumans_imperial, keywords_abhumans_imperial_sub
-from dicerolling import combat_simulator
+from dicerolling import combat_simulator, combat_simulator2
 
 app = dash.Dash(__name__, suppress_callback_exceptions=True, external_stylesheets=[dbc.themes.SLATE],
                 meta_tags=[{'name': 'viewport',
@@ -444,7 +444,7 @@ app.layout = dbc.Container([
     ),
     html.Hr(),
     dbc.Row(dbc.Col(html.H5("Skills",
-                            style={"textAlign": "center"}), width=4)),
+                            style={"textAlign": "left"}), width=4)),
     html.Hr(),
     dbc.Row(
         [
@@ -680,20 +680,60 @@ app.layout = dbc.Container([
         ]
     ),
     html.Hr(),
-    dbc.Row(dbc.Col(html.H3("Simulator",
-                            style={"textAlign": "center"}), width=4)),
+    dbc.Row(dbc.Col(html.H5("Enemy Attack Combat Simulator",
+                            style={"textAlign": "left"}), width=4)),
     html.Hr(),
     # dbc.Button(
     #         "Simulate", id="example-button", className="me-2", n_clicks=0
     #     ),
     dcc.Graph(id="graph"),
-    html.P("Mean:"),
-    dcc.Slider(id="mean", min=-3, max=3, value=0, 
-               marks={-3: '-3', 3: '3'}),
-    html.P("Standard Deviation:"),
-    dcc.Slider(id="std", min=1, max=3, value=1, 
-               marks={1: '1', 3: '3'}),
-
+    html.P("Attack Pool:"),
+    dcc.Slider(id="attackpool", min=1, max=20, value=4, step=1,
+               marks={1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
+                      6: '6', 7: '7', 8: '8', 9: '9', 10: '10',
+                      11: '11', 12: '12', 13: '13', 14: '14', 15: '15',
+                      16: '16', 17: '17', 18: '18', 19: '19', 20: '20'}),
+    html.P("Attack Damage:"),
+    dcc.Slider(id="damage", min=1, max=20, value=4, step=1,
+                marks={1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
+                      6: '6', 7: '7', 8: '8', 9: '9', 10: '10',
+                      11: '11', 12: '12', 13: '13', 14: '14', 15: '15',
+                      16: '16', 17: '17', 18: '18', 19: '19', 20: '20'}),
+    html.P("Extra Damage:"),
+    dcc.Slider(id="extradamage", min=0, max=10, value=1, step=1, 
+                marks={0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
+                      6: '6', 7: '7', 8: '8', 9: '9', 10: '10',
+                      }),
+    html.P("AP:"),
+    dcc.Slider(id="ap", min=0, max=10, value=1, step=1,
+                marks={0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
+                      6: '6', 7: '7', 8: '8', 9: '9', 10: '10',
+                      }),
+    html.Hr(),
+    dbc.Row(dbc.Col(html.H5("Character Attack Combat Simulator",
+                            style={"textAlign": "left"}), width=4)),
+    html.Hr(),
+    # dbc.Button(
+    #         "Simulate", id="example-button", className="me-2", n_clicks=0
+    #     ),
+    dcc.Graph(id="graph2"),
+    html.P("Attack Damage:"),
+    dcc.Slider(id="damage2", min=1, max=20, value=4, step=1,
+               marks={1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
+                      6: '6', 7: '7', 8: '8', 9: '9', 10: '10',
+                      11: '11', 12: '12', 13: '13', 14: '14', 15: '15',
+                      16: '16', 17: '17', 18: '18', 19: '19', 20: '20'}),
+    html.P("Extra Damage:"),
+    dcc.Slider(id="extradamage2", min=0, max=10, value=1, step=1, 
+                marks={0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
+                      6: '6', 7: '7', 8: '8', 9: '9', 10: '10',
+                      }),
+    html.P("AP:"),
+    dcc.Slider(id="ap2", min=0, max=10, value=1, step=1,
+                marks={0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
+                      6: '6', 7: '7', 8: '8', 9: '9', 10: '10',
+                      }),
+         
 ])
 
 # @app.callback(
@@ -707,13 +747,43 @@ app.layout = dbc.Container([
 #     return figure
 
 @app.callback(
-    Output("graph", "figure"), 
-    Input("mean", "value"), 
-    Input("std", "value"))
-def display_color(mean, std):
+    Output("graph2", "figure"),
+    Input("weapon", "children"), 
+    Input("damage2", "value"),
+    Input("extradamage2", "value"),
+    Input("ap2", "value"),
+    )
+def display_color(weapon, damage2, extradamage2, ap2):
+    print(weapon)
+    print(damage2)
+    print(extradamage2)
+    print(ap2)
+    mean = 10
+    std = 2
     data = np.random.normal(mean, std, size=500) # replace with your own data source
+    fig = px.histogram(data, range_x=[-10, 10])
+    # fig = combat_simulator2(weapon, damage2, extradamage2, ap2)
+    return fig
+
+
+
+@app.callback(
+    Output("graph", "figure"), 
+    Input("attackpool", "value"), 
+    Input("damage", "value"),
+    Input("extradamage", "value"),
+    Input("ap", "value"),
+    Input("totalDefence", "children"),
+    Input("totalResilience", "children"),
+    Input("totalWounds", "children"),
+    Input("armour", "children")
+    )
+def enemy_attack_plot(attackpool, damage, extradamage, ap,
+                  totalDefense, totalResilience, totalWounds, armour):
+    # data = np.random.normal(mean, std, size=500) # replace with your own data source
     # fig = px.histogram(data, range_x=[-10, 10])
-    fig = combat_simulator()
+    fig = combat_simulator(attackpool, damage, extradamage, ap,
+                           totalDefense, totalResilience, totalWounds, armour)
     return fig
 
 
@@ -728,7 +798,7 @@ def display_color(mean, std):
 )
 def button_attributes4(ups, downs, attr_values):
     attr_out = attr_values
-    print("value ", attr_values)
+    # print("value ", attr_values)
     if attr_out == None:
         attr_out = 1
     if "up_speed" == ctx.triggered_id:
@@ -754,7 +824,7 @@ def button_attributes4(ups, downs, attr_values):
 )
 def button_attributes3(ups, downs, attr_values):
     attr_out = attr_values
-    print("value ", attr_values)
+    # print("value ", attr_values)
     if attr_out == None:
         attr_out = 1
     if "up_size" == ctx.triggered_id:
@@ -781,17 +851,17 @@ def button_attributes3(ups, downs, attr_values):
 )
 def button_attributes2(ups, downs, attr_values):
     attr_out = attr_values
-    print("value ", attr_values)
+    # print("value ", attr_values)
     if attr_out == None:
-        attr_out = 1
+        attr_out = 0
     if "up_armour" == ctx.triggered_id:
         attr_out +=1
         if attr_out > 12:
             attr_out = 12
     if "down_armour" == ctx.triggered_id:
         attr_out += -1
-        if attr_out < 1:
-            attr_out = 1
+        if attr_out < 0:
+            attr_out = 0
     # placeholder = "TEST"
     placeholder = attr_out
     return placeholder
@@ -864,8 +934,8 @@ def button_skill(ups, downs, attr_values):
     Input("species_selected", "value")
 )
 def subfaction_keyword_select(faction_keyword_list, faction_selected, species_selected):
-    print(faction_selected, species_selected)
-    print(faction_keyword_list)
+    # print(faction_selected, species_selected)
+    # print(faction_keyword_list)
     subfaction_keyword_list = [{'label': 'Unaligned', 'value': 'Unaligned'}]
     if faction_keyword_list == None:
         subfaction_keyword_list = [{'label': 'Unaligned', 'value': 'Unaligned'}]
@@ -893,7 +963,7 @@ def subfaction_keyword_select(faction_keyword_list, faction_selected, species_se
             subfaction_keyword_list = keywords_humans_chaos_sub[faction_keyword_list]
         elif species_selected == "Adeptus Astartes":
             subfaction_keyword_list = keywords_astartes_chaos_sub
-    print(subfaction_keyword_list)
+    # print(subfaction_keyword_list)
     return(subfaction_keyword_list)
 
 @app.callback(
@@ -1192,7 +1262,7 @@ def xpcost(attr ,skill, armour):
         willpower = 1
     
     totalDefence = toughness - 1
-    totalResilience = toughness + 1 #+ armour
+    totalResilience = toughness + 1 + armour
     totalWounds = toughness + tier_result*2
     totalShock = willpower + tier_result
     totalConviction = willpower

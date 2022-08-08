@@ -18,20 +18,22 @@ wg_icons = {
     '6': 'exalted',
 }
 
-def combat_simulator():
+def combat_simulator(attackpool, base_damage, base_extra_damage, ap,
+                     defence, resilience, wounds, armour):
 
     wound_spread = []
+    
+    # print(defence, resilience, wounds, armour)
+    if defence == None: defence = 1
+    if resilience == None: resilience = 1
+    if wounds == None: wounds = 1
+    if armour == None: armour = 0
 
-    for a in range(100):
-
-        result = random.choice(d6)
-
-        ballistics = 5
-        defence = 2
+    for a in range(500):
 
         results = []
 
-        for i in range(ballistics):
+        for i in range(attackpool):
             results.append(random.choice(d6))
 
         results.sort()
@@ -56,7 +58,7 @@ def combat_simulator():
         else:
             for i, score in reversed(list(enumerate(results))):
                 if successes >= defence:
-                    print("Shifting")
+                    # print("Shifting")
                     shifted = shifted + len(results)
                     break
                 else:
@@ -68,9 +70,6 @@ def combat_simulator():
         # print("Shifted: ", shifted)
 
         ### Damage 
-
-        base_damage = 7
-        base_extra_damage = 1
 
         damage = base_damage
 
@@ -93,14 +92,9 @@ def combat_simulator():
 
         ### Armour
 
-        ap = 0
 
-        resilience = 7
-        armour = 3
 
         base_resilience = resilience - armour
-
-        wounds = 5
 
         wounds_remaining = 0
 
@@ -125,16 +119,27 @@ def combat_simulator():
         wound_spread.append(wounds_remaining)
 
 
-    print("Final Results")
-    print(wound_spread)
+    # print("Final Results")
+    # print(wound_spread)
 
     df_spread = pd.DataFrame(data=wound_spread, columns=['Result'])
 
-    print(df_spread)
+    # print(df_spread)
 
     figure_out=px.histogram(data_frame=df_spread, x='Result', template="ggplot2")
-
+    figure_out.update_xaxes(tick0=1.0, dtick=1.0)
     return(figure_out)
+
+def combat_simulator2(attackpool, base_damage, base_extra_damage, ap):
+    
+    print(attackpool)
+    print(base_damage)
+    print(base_extra_damage)
+    print(ap)
+    
+    return "Test"
+
+
 
 
 
