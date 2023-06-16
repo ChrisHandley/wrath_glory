@@ -1135,10 +1135,12 @@ def computeWillpower(willpower, intimidation, leadership, psychic, survival):
     Output("totalMedicae", "children"),
     Input("intelligence", "children"),
     Input("awareness", "children"),
+    Input("investigation", "children"),
+    Input("medicae", "children"),
     Input("scholar", "children"),
     Input("tech", "children"),
-    Input("medicae", "children"),
-    Input("investigation", "children"),
+    
+    
 )
 def computeIntelligence(intelligence, awareness, investigation, medicae, scholar, tech):
     if intelligence == None:
@@ -1151,6 +1153,7 @@ def computeIntelligence(intelligence, awareness, investigation, medicae, scholar
     totalScholar = value + scholar
     totalInvestigation = value + investigation
     totalMedicae = value + medicae
+
 
     return totalAwareness, totalTech, totalScholar, totalInvestigation, totalMedicae
 
